@@ -1,0 +1,36 @@
+{
+  "name": "download-file",
+  "version": "2.0.0",
+  "description": "release by Siarhei Dudko (fix error in original module)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siarheidudko/download-file.git"
+  },
+  "keywords": [
+    "download-file",
+    "download",
+    "file",
+    "url",
+    "get",
+    "http",
+    "https",
+    "stream"
+  ],
+  "author": "rewrite and release Siarhei Dudko, original montanaflynn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/siarheidudko/download-file/issues"
+  },
+  "homepage": "https://github.com/siarheidudko/download-file#readme",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "mkdirp": "^0.5.1",
+    "url": "^0.11.0"
+  }
+}
