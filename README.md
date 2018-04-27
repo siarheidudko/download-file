@@ -1,4 +1,4 @@
-This is the file jumping function for nodejs.
+This is the download file function for nodejs.
 The original module is available in npm (by montanaflynn): https://www.npmjs.com/package/download-file
 
 Regarding the original module, the bug was fixed:
