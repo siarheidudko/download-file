@@ -40,48 +40,53 @@ module.exports = function download(file, options, callback) {
 		var getoptions = url.parse(file); 
 		var request = req.get(getoptions, function(response) {
 			if (response.statusCode === 200) {
-				mkdirp(options.directory, function(err) { 
-					if (err) {
-						throw err;
-					} else {
-						var filestream = fs.createWriteStream(path);
-						response.pipe(filestream);
-						filestream.on("finish", function(){
-							if((typeof(response.headers['content-length']) !== 'undefined') && (response.headers['content-length'] !== '')){
-								try {
-									var stats = fs.statSync(path);
-									if (stats.isFile()) {
-										if(stats.size.toString() !== response.headers['content-length']){
-											throw 'File not full!';
+				mkdirp(options.directory, function(err) {
+					try {
+						if (err) {
+							throw err;
+						} else {
+							var filestream = fs.createWriteStream(path);
+							response.pipe(filestream);
+							filestream.on("finish", function(){
+								if((typeof(response.headers['content-length']) !== 'undefined') && (response.headers['content-length'] !== '')){
+									try {
+										var stats = fs.statSync(path);
+										if (stats.isFile()) {
+											if(stats.size.toString() !== response.headers['content-length']){
+												throw 'File not full!';
+											} else {
+												if (callback) callback(false, path);
+											}
 										} else {
-											if (callback) callback(false, path);
+											throw 'Not Found';
 										}
-									} else {
-										throw 'Not Found';
+									}catch(e){
+										if (callback) callback(e.toString());
 									}
-								}catch(e){
-									callback(e);
-								}
-							} 
-						});
+								} else {
+									if (callback) callback(false, path);
+								} 
+							});
+							filestream.on("error", function(err){
+								request.abort();
+								if (callback) callback(err.toString());
+							});
+						}
+					}catch(err){
+						if (callback) callback(err.toString());
 					}
 				});
 			} else{
 				if (callback) callback(response.statusCode);
 			}
-			response.on("end", function(){
-				if((typeof(response.headers['content-length']) === 'undefined') || (response.headers['content-length'] === '')){
-					if (callback) callback(false, path);
-				}
-			});
 			request.setTimeout(options.timeout, function () {
 				request.abort();
-				callback("Timeout");
+				if (callback) callback("Timeout");
 			});
 		}).on('error', function(e) {
-			if (callback) callback(e);
+			if (callback) callback(e.toString());
 		});
 	}catch(e) {
-		callback(e);
+		if (callback) callback(e.toString());
 	}
 }
