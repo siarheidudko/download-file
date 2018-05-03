@@ -9,7 +9,7 @@ Modified: I check the header content-length, if it is specified, then I check th
 Minor code improvements.
 
 (c) 2018 by Siarhei Dudko.
-https://github.com/siarheidudko/download-file/LICENSE
+https://github.com/siarheidudko/receive-file/LICENSE
 
 ## REQUIRES
 - fs
@@ -20,7 +20,7 @@ https://github.com/siarheidudko/download-file/LICENSE
 
 ## USAGE
 ```
-var download = require('download-file')
+var download = require('receive-file')
  
 var url = "http://ftp.byfly.by/test/5mb.txt"
  
