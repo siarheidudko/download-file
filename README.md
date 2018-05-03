@@ -18,6 +18,11 @@ https://github.com/siarheidudko/receive-file/LICENSE
 - https
 - mkdirp
 
+## Install
+```
+npm install receive-file
+```
+
 ## USAGE
 ```
 var download = require('receive-file')
