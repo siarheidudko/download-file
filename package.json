@@ -1,6 +1,6 @@
 {
 	"name": "receive-file",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "release by Siarhei Dudko (fix error in original module)",
 	"main": "index.js",
 	"scripts": {

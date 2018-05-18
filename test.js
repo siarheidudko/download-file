@@ -1,3 +1,19 @@
+/**
+ *	download-file npm module
+ *	original: https://www.npmjs.com/package/download-file (montanaflynn)
+ *	released: https://github.com/siarheidudko/download-file (Siarhei Dudko admin@sergdudko.tk)
+ *	
+ *	Release:
+ *		Errors removed:
+ *			- The read stream was controlled, but it is necessary to control the write stream
+ *		Finished:
+ *			- Read the Content-length header (if present) and check the integrity of the stream
+ *			- Minor code edits
+ *			
+ *	(c) 2018 by Siarhei Dudko.
+ *	https://github.com/siarheidudko/iocommander/LICENSE
+ */
+
 download = require('./index.js');
 
 var url = "http://ftp.byfly.by/test/5mb.txt"
