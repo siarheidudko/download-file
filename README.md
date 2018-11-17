@@ -1,4 +1,12 @@
+# Receive-file
 This is the download file function for nodejs.
+  
+[![npm](https://img.shields.io/npm/v/receive-file.svg)](https://www.npmjs.com/package/receive-file)
+[![npm](https://img.shields.io/npm/dy/receive-file.svg)](https://www.npmjs.com/package/receive-file)
+[![NpmLicense](https://img.shields.io/npm/l/receive-file.svg)](https://www.npmjs.com/package/receive-file)
+![GitHub last commit](https://img.shields.io/github/last-commit/siarheidudko/receive-file.svg)
+![GitHub release](https://img.shields.io/github/release/siarheidudko/receive-file.svg)
+
 The original module is available in npm (by montanaflynn): https://www.npmjs.com/package/download-file
 
 Regarding the original module, the bug was fixed:
