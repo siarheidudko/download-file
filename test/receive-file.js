@@ -47,7 +47,7 @@ describe('Test normal (status 200):', function() {
 					done(new Error(p + ' !== ' + pt));
 				});
 			}
-		}).catch(() => {
+		}).catch((err) => {
 			if(err) {
 				done(err);
 			} else {
