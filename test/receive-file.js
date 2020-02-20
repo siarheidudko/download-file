@@ -7,7 +7,7 @@ let Path = require('path'),
 	Download = require('../index.js');
 
 describe('Test normal (status 200):', function() {
-	this.timeout(30000);
+	this.timeout(60000);
 	let url = "http://ftp.byfly.by/test/10Mb.txt";
 	it('with callback', function(done){
 		let options = {
@@ -58,7 +58,7 @@ describe('Test normal (status 200):', function() {
 });
 
 describe('Test error (status 404):', function() {
-	this.timeout(30000);
+	this.timeout(60000);
 	let url = "http://ftp.byfly.by/test/10Mb.txtdsdfsdafdasfdasfdasfdasfdas";
 	it('with callback', function(done){
 		let options = {
@@ -99,7 +99,7 @@ describe('Test error (status 404):', function() {
 });
 
 describe('Test w/o options:', function() {
-	this.timeout(30000);
+	this.timeout(60000);
 	it('status 200', function(done){
 		let url = "http://ftp.byfly.by/test/10Mb.txt";
 		let options = {
