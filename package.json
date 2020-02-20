@@ -1,6 +1,6 @@
 {
 	"name": "receive-file",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Download file (use stream methods)",
 	"main": "index.js",
 	"scripts": {
@@ -30,6 +30,7 @@
 		"get",
 		"request-file"
 	],
+	"homepage": "https://siarheidudko.github.io/receive-file/index.html",
 	"links": {
 		"npm": "https://www.npmjs.com/package/@sergdudko/receive-file",
 		"homepage": "https://siarheidudko.github.io/receive-file/index.html",

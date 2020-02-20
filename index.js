@@ -4,7 +4,7 @@
  * @author Siarhei Dudko <slavianich@gmail.com>
  * @copyright 2019-2020
  * @license MIT
- * @version 2.0.0
+ * @version 2.0.1
  * @requires fs
  * @requires url
  * @requires http
