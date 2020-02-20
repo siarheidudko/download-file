@@ -19,9 +19,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run eslint
-	- run: sh -c "sudo rm -rf tmp"
-	- run: mkdir tmp
-	- run: sh -c "sudo chmod -R 777 tmp"
+    - run: sh -c "sudo rm -rf tmp"
+    - run: mkdir tmp
+    - run: sh -c "sudo chmod -R 777 tmp"
     - run: npm test
       env:
         CI: true
