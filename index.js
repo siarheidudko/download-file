@@ -191,10 +191,10 @@ let ReceiveFile = function(url, options, callback){
  /**
  * ReceiveFile Object Settings
  *
- * @function ReceiveFileSettings
- * @param {string} directory - directory for download file
- * @param {string} filename - filename for download file
- * @param {number} timeout - download file timeout, milliseconds
+ * @namespace ReceiveFileSettings
+ * @property {string} directory - directory for download file
+ * @property {string} filename - filename for download file
+ * @property {number} timeout - download file timeout, milliseconds
  */
  
  /**
