@@ -109,7 +109,7 @@ let recursiveMkdir = function(path, obj, callback){
 			if(err && (err.code !== 'EEXIST')) {
 				callback(err);
 			} else {
-				let _path = _path.splice(1);
+				_path = _path.splice(1);
 				while(_path[0] === ''){
 					_path = _path.splice(1);
 				}
