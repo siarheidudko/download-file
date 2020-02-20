@@ -4,3 +4,4 @@ tmp
 .nyc_output
 docs
 .github
+node.exe

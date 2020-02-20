@@ -19,6 +19,105 @@ let Fs = require('fs'),
 	Http = require('http'),
 	Https = require('https'),
 	Path = require('path');
+  
+let nodeVers = process.version.substr(1);
+
+/**
+  * Compare version function
+  * 
+  * @private
+  * @function
+  * @param {string} v1 - first version
+  * @param {string} v2 - second version
+  * @return {number} n - if v1 > v2 return 1, if v1 < v2 return 0, else return -1
+  */
+function compareVers(v1, v2){
+	if((typeof(v1) !== 'string') 
+		|| (typeof(v2) !== 'string')
+	){
+		return new Error('The arguments passed are not string values!');
+	}
+	const _v1 = v1.match(/^(\d+\.){0,3}(\d+)/gi);
+	const _v2 = v2.match(/^(\d+\.){0,3}(\d+)/gi);
+	if(!(Array.isArray(_v1) && (typeof(_v1[0]) === 'string')) 
+		|| !(Array.isArray(_v2) && (typeof(_v2[0]) === 'string'))
+	){
+		return new Error('The arguments passed are not string versions!');
+	}
+	try{
+		const _vn1 = _v1[0].split('.').map(function(arg){ return Number.parseInt(arg, 10); });
+		const _vn2 = _v2[0].split('.').map(function(arg){ return Number.parseInt(arg, 10); });
+		for(let i = 0; i < _vn1.length; i++){
+			if(_vn1[i] > _vn2[i])
+				return 1;
+			if(_vn1[i] < _vn2[i])
+				return -1;
+		}
+		return 0;
+	} catch(err){
+		return new Error('Version comparison error:'+err.message);
+	}
+}
+
+/**
+  * Recursive make dir promise
+  * 
+  * @private
+  * @async
+  * @function
+  * @param {string} path - path to create directories
+  * @param {RecursiveMkdirSettings} options - settings to create directories
+  * @return {Promise} promise
+  */
+let promiseMkdir = function(path, obj = {recursive: false, mode: 0o777}){
+	if(compareVers(nodeVers, '10.0.0') >= 0){
+		return Fs.promises.mkdir(path, obj);
+	} else {
+		return new Promise((res, rej) => {
+			recursiveMkdir(path, obj, function(err){
+				if(err){
+					rej(err);
+				} else {
+					res();
+				}
+			});
+		});
+	}
+}
+
+/**
+  * Recursive make dir function
+  * 
+  * @private
+  * @function
+  * @param {string} path - path to create directories
+  * @param {RecursiveMkdirSettings} options - settings to create directories
+  * @param {RecursiveMkdirCallback} callback - callback function
+  */
+let recursiveMkdir = function(path, obj, callback){
+	let _path;
+	if(obj.recursive === true){
+		_path = path.split(Path.sep);
+	} else {
+		_path = [path];
+	}
+	try{
+		Fs.mkdir(_path[0], {mode: obj.mode}, (err) => {
+			if(err && (err.code !== 'EEXIST')) {
+				callback(err);
+			} else {
+				if((_path.length !== 1) && (obj.recursive === true)){
+					path = Path.join(_path.splice(1));
+					recursiveMkdir(path, obj, callback);
+				} else {
+					callback();
+				}
+			}
+		});
+	} catch(err){
+		callback(err);
+	}
+}
 
 /**
   * File delete function
@@ -65,7 +164,7 @@ let receivefile = function(url, options, level = 0){
 				case 203:
 				case 204:
 				case 205:
-					Fs.promises.mkdir(options.directory, {recursive: true, mode: 0o666}).then(() => {
+					promiseMkdir(options.directory, {recursive: true, mode: 0o666}).then(() => {
 						let filestream = Fs.createWriteStream(path);
 						let _timer = options.timeout + dt;
 						response.on('data', () => {
@@ -73,10 +172,11 @@ let receivefile = function(url, options, level = 0){
 						}).pipe(filestream);
 						filestream.on("finish",() => {
 							if((typeof(response.headers['content-length']) === 'string') && (response.headers['content-length'] !== '')){
-								try {
-									var stats = Fs.statSync(path);
-									if (stats.isFile()) {
-										if(stats.size.toString() !== response.headers['content-length']){
+								Fs.stat(path, (err, stat) => {
+									if(err){
+										deleteFile(path, err, rej);
+									} else if ((typeof(stat) === 'object') && stat.isFile()) {
+										if(stat.size.toString() !== response.headers['content-length']){
 											deleteFile(path, new Error('File not full!'), rej);
 										} else {
 											res(path);
@@ -84,9 +184,7 @@ let receivefile = function(url, options, level = 0){
 									} else {
 										deleteFile(path, new Error('Not Found'), rej);
 									}
-								} catch(err){
-									deleteFile(path, err, rej);
-								}
+								});
 							} else {
 								res(path);
 							} 
@@ -202,6 +300,23 @@ let ReceiveFile = function(url, options, callback){
  *
  * @private
  * @callback DeleteFileCallback
+ * @param {Error} err - instance of Error
+ */
+ 
+  /**
+ * RecursiveMkdir Object Settings
+ *
+ * @private
+ * @namespace RecursiveMkdirSettings
+ * @property {boolean} recursive - Default: false
+ * @property {number} mode - Not supported on Windows. Default: 0o777.
+ */
+ 
+ /**
+ * RecursiveMkdir Callback Function
+ *
+ * @private
+ * @callback RecursiveMkdirCallback
  * @param {Error} err - instance of Error
  */
 
