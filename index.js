@@ -98,6 +98,9 @@ let recursiveMkdir = function(path, obj, callback){
 	let _path;
 	if(obj.recursive === true){
 		_path = path.split(Path.sep);
+		while(_path[0] === ''){
+			_path = _path.splice(1);
+		}
 	} else {
 		_path = [path];
 	}
@@ -106,8 +109,12 @@ let recursiveMkdir = function(path, obj, callback){
 			if(err && (err.code !== 'EEXIST')) {
 				callback(err);
 			} else {
-				if((_path.length !== 1) && (obj.recursive === true)){
-					path = Path.join(_path.splice(1));
+				let _path = _path.splice(1);
+				while(_path[0] === ''){
+					_path = _path.splice(1);
+				}
+				if((_path.length !== 0) && (obj.recursive === true)){
+					path = Path.join(_path);
 					recursiveMkdir(path, obj, callback);
 				} else {
 					callback();
