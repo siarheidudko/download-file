@@ -1,14 +1,17 @@
 {
 	"name": "receive-file",
-	"version": "1.0.3",
-	"description": "release by Siarhei Dudko (fix error in original module)",
+	"version": "2.0.0",
+	"description": "Download file (use stream methods)",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "mocha",
+		"doc": "jsdoc index.js README.md -d ./docs/",
+		"cov": "nyc mocha",
+		"eslint": "eslint index.js"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/siarheidudko/receive-file/"
+		"url": "github:siarheidudko/receive-file"
 	},
 	"keywords": [
 		"get-file",
@@ -19,25 +22,38 @@
 		"get",
 		"http",
 		"https",
-		"stream"
+		"stream",
+		"request",
+		"receive-file",
+		"receive",
+		"request",
+		"get",
+		"request-file"
 	],
-  "links": {
-			"npm": "https://www.npmjs.com/package/@sergdudko/receive-file",
-			"homepage": "https://github.com/siarheidudko/receive-file/#README",
-			"repository": "https://github.com/siarheidudko/receive-file/",
-			"bugs": "https://github.com/siarheidudko/receive-file/issues"
-		},
-		"publisher": {
-			"username": "Siarhei Dudko",
-			"email": "admin@sergdudko.tk"
-		},
+	"links": {
+		"npm": "https://www.npmjs.com/package/@sergdudko/receive-file",
+		"homepage": "https://siarheidudko.github.io/receive-file/index.html",
+		"repository": "github:siarheidudko/receive-file",
+		"bugs": "https://github.com/siarheidudko/receive-file/issues"
+	},
+	"publisher": {
+		"username": "Siarhei Dudko",
+		"email": "admin@sergdudko.tk"
+	},
 	"author": "Siarhei Dudko",
-	"license": "ISC",
-	"dependencies": {
-		"fs": "0.0.1-security",
-		"http": "0.0.0",
-		"https": "^1.0.0",
-		"mkdirp": "^0.5.1",
-		"url": "^0.11.0"
+	"license": "MIT",
+	"engines": {
+		"node": ">=8"
+	},
+	"dependencies": {},
+	"directorie": {
+		"man": "./docs/",
+		"test": "./test/"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"jsdoc": "^3.6.3",
+		"mocha": "^7.0.1",
+		"nyc": "^15.0.0"
 	}
 }
